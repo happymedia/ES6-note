@@ -1,32 +1,33 @@
 /**
- * Object
- * Object.assign() 方法用于将所有可枚举属性的值从一个或多个源对象复制到目标对象。它将返回目标对象。
- * Object.create() 使用指定的原型对象和属性创建一个新对象。
- * Object.defineProperty() 方法会直接在一个对象上定义一个新属性，或者修改一个对象的现有属性，并返回此对象。
+ * let 
+ * 不存在变量提升
+ * 不允许重复声明
+ * 块级作用域
+ */
+console.log(foo); //undefined
+var foo = 2;
+
+console.log(bar); //ReferenceError
+let bar = 2;
+
+/**
+ * const
+ * const声明的变量不得改变值，这意味着，const一旦声明变量，就必须立即初始化，不能留到以后赋值
+ * 
+ * const实际上保证的，并不是变量的值不得改动，而是变量指向的那个内存地址所保存的数据不得改动。
+ * 对于简单类型的数据（数值、字符串、布尔值），值就保存在变量指向的那个内存地址，因此等同于常量。
+ * 但对于复合类型的数据（主要是对象和数组），变量指向的内存地址，保存的只是一个指向实际数据的指针，
+ * const只能保证这个指针是固定的（即总是指向另一个固定的地址），至于它指向的数据结构是不是可变的，
+ * 就完全不能控制了。因此，将一个对象声明为常量必须非常小心。
  */
 
-let obj = { foo: 123 , test: 456};
-console.log(Object.getOwnPropertyDescriptor(obj, 'test'))
-console.log(Object.getOwnPropertyDescriptor(Object.prototype, 'toString'))
+const PI = "3.14"
+PI = "3.1415926"
 
+const fooo = {}
+// 为 foo 添加一个属性，可以成功
+fooo.prop = 123;
+fooo.prop // 123
+// 将 foo 指向另一个对象，就会报错
+fooo = {}; // TypeError: "foo" is read-only
 
-//Object.defineProperty() 
-//Object.defineProperty(obj, prop, descriptor)
-const object1 = {};
-
-Object.defineProperty(object1, 'property1', {
-  value: 42,
-  writable: false
-});
-
-object1.property1 = 77;
-// throws an error in strict mode
-
-console.log(object1.property1);
-// expected output: 42
-
-const foo = Object.freeze({});
-
-// 常规模式时，下面一行不起作用；
-// 严格模式时，该行会报错
-foo.prop = 123;
